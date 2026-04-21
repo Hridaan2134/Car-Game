@@ -30,14 +30,37 @@ export const useStore = create((set) => ({
   setActiveCar: (car) => set({ activeCar: car }),
 
   addPrizeMoney: (amount) =>
-    set((state) => ({ driverBalance: state.driverBalance + amount })),
+    set((state) => ({ 
+      driverBalance: Math.max(0, state.driverBalance + amount) 
+    })),
 
   addRacePoints: (position) =>
-    set((state) => ({
-      racePoints:  state.racePoints + (POSITION_POINTS[position - 1] ?? 0),
-      totalRaces:  state.totalRaces + 1,
-      racesWon:    state.racesWon + (position === 1 ? 1 : 0),
-    })),
+    set((state) => {
+      const basePoints = POSITION_POINTS[position - 1] ?? 0;
+      let momentumBonus = 0;
+      let balanceChange = 0;
+
+      // Win Momentum (1st - 3rd)
+      if (position <= 3) {
+        momentumBonus = (4 - position) * 10; // Extra points
+        balanceChange = (4 - position) * 25000; // Extra win bonus
+      } 
+      // Loss Momentum (9th - 12th)
+      else if (position >= 9) {
+        momentumBonus = -15; // Point deduction
+        balanceChange = -50000; // Repair cost / Penalty
+      }
+
+      const newPoints = Math.max(0, state.racePoints + basePoints + momentumBonus);
+      const newBalance = Math.max(0, state.driverBalance + balanceChange);
+
+      return {
+        racePoints: newPoints,
+        driverBalance: newBalance,
+        totalRaces: state.totalRaces + 1,
+        racesWon: state.racesWon + (position === 1 ? 1 : 0),
+      };
+    }),
 
   buyCar: (car) => set((state) => {
     const cost = car.price * 1000;

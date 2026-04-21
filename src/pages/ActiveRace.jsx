@@ -334,7 +334,7 @@ const CarBody = ({ color, imgUrl, isPlayer, isBraking, speed }) => {
 };
 
 // ── Player Car ────────────────────────────────────────────────────────────────
-const PlayerCar = ({ controls, setSpeed, setDistance, setGear, setRpm, setFinished, setChromatic, setBraking, setNitro, playerImg, raceStarted }) => {
+const PlayerCar = ({ controls, setSpeed, setDistance, setGear, setRpm, setFinished, setChromatic, setBraking, setNitro, playerImg, carColor, raceStarted }) => {
   const meshRef   = useRef();
   const vel       = useRef(0);
   const posX      = useRef(0);
@@ -450,7 +450,7 @@ const PlayerCar = ({ controls, setSpeed, setDistance, setGear, setRpm, setFinish
 
   return (
     <group ref={meshRef} position={[0, 0, 10]}>
-      <CarBody color="#00c8ff" imgUrl={playerImg} isPlayer isBraking={controls.current.backward} speed={speedDisplay.current} />
+      <CarBody color={carColor} imgUrl={playerImg} isPlayer isBraking={controls.current.backward} speed={speedDisplay.current} />
     </group>
   );
 };
@@ -1115,8 +1115,22 @@ const HUD = ({ speed, distance, isFinished, isBraking, navigate, nitro, elapsedT
             <div className="grid grid-cols-4 gap-3 mb-8 text-center">
               <div><div className="text-[9px] text-gray-500 tracking-widest mb-1">FINAL TIME</div><div className="text-white font-mono font-black text-lg">{fmt(elapsedTime)}</div></div>
               <div><div className="text-[9px] text-gray-500 tracking-widest mb-1">TOP SPEED</div><div className="text-cyan-400 font-black text-lg">{kmh} <span className="text-xs">KM/H</span></div></div>
-              <div><div className="text-[9px] text-gray-500 tracking-widest mb-1">PRIZE</div><div className="text-amber-400 font-black text-lg">+${PRIZE_MONEY.toLocaleString()}</div></div>
-              <div><div className="text-[9px] text-gray-500 tracking-widest mb-1">PTS EARNED</div><div className="text-purple-400 font-black text-lg">+{[25,18,15,12,10,8,6,4,3,2,1,0][position-1]??0}</div></div>
+              <div>
+                <div className="text-[9px] text-gray-500 tracking-widest mb-1">
+                  {position >= 9 ? 'REPAIR COST' : 'PRIZE + BONUS'}
+                </div>
+                <div className={`font-black text-lg ${position >= 9 ? 'text-red-500' : 'text-amber-400'}`}>
+                  {position >= 9 ? '-$50,000' : `+$${(PRIZE_MONEY + (position <= 3 ? (4 - position) * 25000 : 0)).toLocaleString()}`}
+                </div>
+              </div>
+              <div>
+                <div className="text-[9px] text-gray-500 tracking-widest mb-1">
+                  {position >= 9 ? 'PENALTY' : 'PTS EARNED'}
+                </div>
+                <div className={`font-black text-lg ${position >= 9 ? 'text-red-600' : 'text-purple-400'}`}>
+                  {position >= 9 ? '-15' : `+${([25,18,15,12,10,8,6,4,3,2,1,0][position-1] ?? 0) + (position <= 3 ? (4 - position) * 10 : 0)}`}
+                </div>
+              </div>
             </div>
             <div className="mb-5 text-[10px] text-gray-500 font-bold tracking-widest">
               TOTAL CHAMPIONSHIP POINTS: <span className="text-purple-300">{racePoints}</span>
@@ -1140,6 +1154,7 @@ const ActiveRace = () => {
   const navigate   = useNavigate();
   const mapType    = params.get('map') || 'tokyo';
   const playerImg  = params.get('img') || null;
+  const carColor   = params.get('color') || '#00c8ff';
 
   // Store
   const playerName    = useStore((s) => s.playerName);
@@ -1236,6 +1251,7 @@ const ActiveRace = () => {
             setBraking={setBraking}
             setNitro={setNitro}
             playerImg={playerImg}
+            carColor={carColor}
             raceStarted={raceStarted}
           />
 

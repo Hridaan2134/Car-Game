@@ -8,7 +8,7 @@ export const CARS = [
     speed: "330 km/h", 
     accel: "2.5s", 
     handling: "10.0",
-    color: "#e60000"
+    color: "#e6e6e6" // Clean Haas White/Gray
   },
   { 
     name: "MERCEDES-AMG ONE", 
@@ -19,7 +19,7 @@ export const CARS = [
     speed: "350 km/h", 
     accel: "2.7s", 
     handling: "9.5",
-    color: "#00d2be"
+    color: "#00d2be" // Petronas Teal
   },
   { 
     name: "ROLLS-ROYCE WRAITH", 
@@ -30,7 +30,7 @@ export const CARS = [
     speed: "250 km/h", 
     accel: "4.4s", 
     handling: "7.5",
-    color: "#6b7280"
+    color: "#3d404d" // Luxury Silver Blue
   },
   { 
     name: "LAMBORGHINI AVENTADOR SVJ", 
@@ -41,7 +41,7 @@ export const CARS = [
     speed: "351 km/h", 
     accel: "2.8s", 
     handling: "8.8",
-    color: "#eab308"
+    color: "#eab308" // Giallo Orion (Yellow)
   },
   { 
     name: "MUSTANG GT 2026", 
@@ -52,7 +52,7 @@ export const CARS = [
     speed: "280 km/h", 
     accel: "3.9s", 
     handling: "6.5",
-    color: "#3b82f6"
+    color: "#1e40af" // Deep Blue
   },
   { 
     name: "PORSCHE 911 GT3 RS", 
@@ -63,7 +63,7 @@ export const CARS = [
     speed: "312 km/h", 
     accel: "3.2s", 
     handling: "9.8",
-    color: "#f97316"
+    color: "#f97316" // Lava Orange
   },
   { 
     name: "FERRARI F8 TRIBUTO", 
@@ -74,7 +74,7 @@ export const CARS = [
     speed: "340 km/h", 
     accel: "2.9s", 
     handling: "8.5",
-    color: "#ef4444"
+    color: "#ef4444" // Rosso Corsa (Red)
   },
   { 
     name: "BMW M4 COMPETITION", 
@@ -85,6 +85,28 @@ export const CARS = [
     speed: "290 km/h", 
     accel: "3.8s", 
     handling: "7.9",
-    color: "#1e40af"
+    color: "#4f46e5" // M-Sport Purple/Blue
+  },
+  { 
+    name: "BUGATTI CHIRON", 
+    class: "S+", 
+    type: "HYPERCAR", 
+    price: 3200, 
+    image: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=800&q=80", 
+    speed: "420 km/h", 
+    accel: "2.4s", 
+    handling: "8.2",
+    color: "#0c1b33" // Atlantic Blue
+  },
+  { 
+    name: "MCLAREN P1", 
+    class: "S", 
+    type: "HYPERCAR", 
+    price: 1800, 
+    image: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80", 
+    speed: "350 km/h", 
+    accel: "2.8s", 
+    handling: "9.2",
+    color: "#fb923c" // McLaren Orange
   }
 ];

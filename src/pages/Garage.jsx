@@ -11,7 +11,7 @@ const Garage = () => {
   const navigate = useNavigate();
 
   const handleStartRace = () => {
-    navigate(`/race-loader?car=${encodeURIComponent(activeCar.name)}&img=${encodeURIComponent(activeCar.image || '')}`);
+    navigate('/maps');
   };
 
   return (

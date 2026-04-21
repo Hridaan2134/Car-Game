@@ -10,6 +10,7 @@ const RaceLoader = () => {
   const searchParams = new URLSearchParams(location.search);
   const carName = searchParams.get('car') || 'MERCEDES-AMG GT';
   const customImg = searchParams.get('img');
+  const carColor = searchParams.get('color') || '#00c8ff';
   const mapType = searchParams.get('map') || 'tokyo';
 
   const mapNames = {
@@ -27,7 +28,7 @@ const RaceLoader = () => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => navigate(`/race?car=${encodeURIComponent(carName)}&map=${mapType}&img=${encodeURIComponent(customImg || '')}`), 1500);
+          setTimeout(() => navigate(`/race?car=${encodeURIComponent(carName)}&map=${mapType}&img=${encodeURIComponent(customImg || '')}&color=${encodeURIComponent(carColor)}`), 1500);
           return 100;
         }
         return prev + (Math.random() * 15);

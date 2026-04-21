@@ -7,7 +7,7 @@ const Maps = () => {
   const navigate = useNavigate();
 
   const handleSelectMap = (mapType) => {
-    navigate(`/race-loader?car=${encodeURIComponent(activeCar?.name || 'MERCEDES-AMG GT')}&map=${mapType}&img=${encodeURIComponent(activeCar?.image || '')}`);
+    navigate(`/race-loader?car=${encodeURIComponent(activeCar?.name || 'MERCEDES-AMG GT')}&map=${mapType}&img=${encodeURIComponent(activeCar?.image || '')}&color=${encodeURIComponent(activeCar?.color || '#00c8ff')}`);
   };
 
   const maps = [
