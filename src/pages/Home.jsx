@@ -73,7 +73,7 @@ const Home = () => {
                 </h3>
               </div>
               
-              <Link to="/races" className="self-start mt-4 flex items-center bg-red-600 hover:bg-red-500 text-white py-3 px-8 rounded-lg font-black italic tracking-widest transition-colors shadow-[0_0_20px_rgba(220,38,38,0.5)] border border-red-400/50">
+              <Link to="/cars" className="self-start mt-4 flex items-center bg-red-600 hover:bg-red-500 text-white py-3 px-8 rounded-lg font-black italic tracking-widest transition-colors shadow-[0_0_20px_rgba(220,38,38,0.5)] border border-red-400/50">
                 RACE NOW
                 <ChevronRight className="w-5 h-5 ml-2 transition-transform" />
               </Link>

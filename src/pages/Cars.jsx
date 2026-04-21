@@ -1,6 +1,18 @@
-import { CarFront, Filter } from 'lucide-react';
+import { CarFront, Filter, ChevronRight } from 'lucide-react';
+import { useStore } from '../store/useStore';
+import { CARS } from '../data/cars';
+import { useNavigate } from 'react-router-dom';
 
 const Cars = () => {
+  const { activeCar, setActiveCar } = useStore();
+  const navigate = useNavigate();
+
+  const handleSelectCar = (car) => {
+    setActiveCar(car);
+    // Dynamic transition feel: small delay or just navigate
+    navigate('/maps');
+  };
+
   return (
     <div className="px-6 relative h-full flex flex-col">
       <div className="mb-6 flex justify-between items-end">
@@ -9,48 +21,69 @@ const Cars = () => {
             VEHICLE DB
           </h2>
           <div className="text-[10px] text-gray-400 font-bold tracking-[0.2em] mt-2">
-            ALL AVAILABLE CARS
+            SELECT YOUR MACHINE
           </div>
         </div>
-        <button className="bg-gray-900 p-2 rounded">
+        <button className="bg-gray-900/50 p-2 rounded border border-white/5 hover:border-white/20 transition-colors">
            <Filter className="w-5 h-5 text-gray-400" />
         </button>
       </div>
 
       <div className="flex-1 overflow-y-auto pb-4 no-scrollbar">
         <div className="grid grid-cols-2 gap-3">
-          {[
-            { name: "HAAS VF-25", class: "S+", image: "/images/haas.png" },
-            { name: "MUSTANG GT 2026", class: "A", image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80" },
-            { name: "LAMBORGHINI SC20", class: "S", image: "https://images.unsplash.com/photo-1583121274602-3e2820c69e88?w=800&q=80" },
-            { name: "PORSCHE 911 GT3 RS", class: "S", image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" },
-            { name: "PAGANI HUAYRA R", class: "S", image: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80" },
-            { name: "FERRARI F8 TRIBUTO", class: "A", image: "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80" },
-            { name: "KOENIGSEGG JESKO ABSOLUT", class: "S+", image: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=800&q=80" },
-            { name: "BMW M4 COMPETITION", class: "B", image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80" },
-            { name: "MERCEDES-AMG ONE", class: "S", image: "/images/mercedes.png" },
-            { name: "MERCEDES-BENZ SLS AMG", class: "A", image: "" },
-            { name: "ROLLS-ROYCE WRAITH", class: "B", image: "/images/rolls.png" },
-            { name: "BENTLEY CONTINENTAL GT", class: "A", image: "" },
-            { name: "LAMBORGHINI AVENTADOR SVJ", class: "S", image: "/images/svj.png" },
-            { name: "BUGATTI CHIRON PUR SPORT", class: "S", image: "" },
-            { name: "PORSCHE 911 GT3 RS", class: "A", image: "" },
-            { name: "FERRARI SF90 STRADALE", class: "S", image: "" },
-            { name: "MCLAREN P1", class: "S", image: "" },
-            { name: "ASTON MARTIN VANTAGE", class: "B", image: "" }
-          ].map((car, i) => (
-            <div key={i} className="bg-[#111218] border border-gray-800 rounded p-3 flex flex-col items-center text-center overflow-hidden relative shadow-lg">
-              <div className="w-full h-16 bg-gray-800 rounded relative mb-2 flex items-center justify-center overflow-hidden">
-                {car.image ? (
-                  <img src={car.image} alt={car.name} className="absolute inset-0 w-full h-full object-cover" />
-                ) : (
-                  <CarFront className="w-8 h-8 text-gray-600" />
+          {CARS.map((car, i) => {
+            const isSelected = activeCar?.name === car.name;
+            return (
+              <div 
+                key={i} 
+                onClick={() => handleSelectCar(car)}
+                className={`group cursor-pointer bg-[#111218] border transition-all duration-300 rounded-xl p-3 flex flex-col items-center text-center overflow-hidden relative shadow-lg ${
+                  isSelected ? 'border-cyan-500 ring-1 ring-cyan-500/50 scale-[1.02]' : 'border-gray-800 hover:border-gray-600'
+                }`}
+              >
+                {/* Glow Effect for Selected */}
+                {isSelected && (
+                  <div className="absolute inset-0 bg-cyan-500/5 blur-xl pointer-events-none"></div>
                 )}
+
+                <div className="w-full h-18 bg-gray-900/50 rounded-lg relative mb-3 flex items-center justify-center overflow-hidden border border-white/5">
+                  {car.image ? (
+                    <img 
+                      src={car.image} 
+                      alt={car.name} 
+                      className={`w-full h-full object-contain p-1 transition-transform duration-500 ${isSelected ? 'scale-110' : 'group-hover:scale-105'}`} 
+                    />
+                  ) : (
+                    <CarFront className="w-8 h-8 text-gray-700" />
+                  )}
+                  {isSelected && (
+                    <div className="absolute top-1 right-1 bg-cyan-500 p-1 rounded-full shadow-lg">
+                      <ChevronRight className="w-2 h-2 text-black" />
+                    </div>
+                  )}
+                </div>
+
+                <h4 className={`font-black text-[10px] leading-tight transition-colors min-h-[24px] flex items-center justify-center relative z-10 ${
+                  isSelected ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'
+                }`}>
+                  {car.name}
+                </h4>
+                
+                <div className="flex items-center gap-2 mt-1 relative z-10">
+                  <span className={`text-[8px] font-black px-1.5 py-0.5 rounded ${
+                    car.class === 'S+' ? 'bg-red-500/20 text-red-400' : 
+                    car.class === 'S' ? 'bg-yellow-500/20 text-yellow-400' :
+                    'bg-cyan-500/20 text-cyan-400'
+                  }`}>
+                    {car.class}
+                  </span>
+                  <span className="text-[7px] text-gray-500 font-bold tracking-widest uppercase">
+                    {car.type}
+                  </span>
+                </div>
               </div>
-              <h4 className="font-bold text-[10px] leading-tight text-gray-300 min-h-[24px] flex items-center justify-center relative z-10">{car.name}</h4>
-              <p className="text-[8px] text-gray-500 font-bold tracking-widest mt-1 relative z-10">CLASS {car.class}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
