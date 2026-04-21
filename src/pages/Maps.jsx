@@ -13,7 +13,10 @@ const Maps = () => {
   const maps = [
     { id: 'tokyo', name: 'TOKYO EXPRESSWAY', region: 'ASIA', length: '12.4 KM', difficulty: 'MODERATE', color: 'cyan' },
     { id: 'nevada', name: 'NEVADA DESERT', region: 'NA', length: '24.1 KM', difficulty: 'EASY', color: 'orange' },
-    { id: 'alpine', name: 'ALPINE PASS', region: 'EU', length: '8.2 KM', difficulty: 'HARD', color: 'indigo' }
+    { id: 'alpine', name: 'ALPINE PASS', region: 'EU', length: '8.2 KM', difficulty: 'HARD', color: 'indigo' },
+    { id: 'dora', name: 'DORA BALTEA', region: 'EU', length: '15.6 KM', difficulty: 'HARD', color: 'emerald' },
+    { id: 'nurburg', name: 'NÜRBURGRING', region: 'EU', length: '20.8 KM', difficulty: 'EXTREME', color: 'green' },
+    { id: 'gp', name: 'GRAND PRIX TRACK', region: 'MIDDLE EAST', length: '5.4 KM', difficulty: 'MODERATE', color: 'red' }
   ];
 
   return (

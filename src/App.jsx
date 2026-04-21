@@ -10,9 +10,24 @@ import Cars from './pages/Cars';
 import RaceLoader from './pages/RaceLoader';
 import ActiveRace from './pages/ActiveRace';
 
+import { useEffect } from 'react';
+import { useStore } from './store/useStore';
+
+const PlayTimeTracker = () => {
+  const incrementPlayTime = useStore((s) => s.incrementPlayTime);
+  
+  useEffect(() => {
+    const id = setInterval(() => incrementPlayTime(), 1000);
+    return () => clearInterval(id);
+  }, [incrementPlayTime]);
+  
+  return null;
+};
+
 function App() {
   return (
     <Router>
+      <PlayTimeTracker />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

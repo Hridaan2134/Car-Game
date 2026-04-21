@@ -25,6 +25,21 @@ export const useStore = create((set) => ({
   racesWon: Math.floor(initialPoints / 100),
   ownedCars: initialOwned,
   activeCar: initialActive,
+  totalPlayTime: 0, // In seconds
+  loyaltyRewardClaimed: false,
+
+  incrementPlayTime: () => set((state) => {
+    const newPlayTime = state.totalPlayTime + 1;
+    // Auto-check reward at 3600 seconds (1 hour)
+    if (newPlayTime >= 3600 && !state.loyaltyRewardClaimed) {
+      return { 
+        totalPlayTime: newPlayTime,
+        driverBalance: state.driverBalance + 10000,
+        loyaltyRewardClaimed: true
+      };
+    }
+    return { totalPlayTime: newPlayTime };
+  }),
 
   setPlayerName: (name) => set({ playerName: name.toUpperCase() }),
   setActiveCar: (car) => set({ activeCar: car }),
